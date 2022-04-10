@@ -1,0 +1,33 @@
+name: ci
+on:
+  push:
+    branches:
+      - master
+      - main
+jobs:
+  obs2mk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: 3.10.2
+      - name: obs2mk source files
+        run: |
+          pip install obs2mk
+          for f in ${{ github.workspace}}/source/*
+          do
+            if [[ "$f" == *md ]] 
+            then
+              obs2mk --GA --keep file $f
+            fi
+          done
+      - name: clean source files
+        run: rm ${{github.workspace}}/source/*
+      - name: Push new files
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add . 
+          git commit -am "Updated blog 🎉"
+          git push
