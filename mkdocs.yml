@@ -1,6 +1,6 @@
-site_name: 
-site_description: 
-site_url: 
+site_name: GitHelpTest
+site_description: Help File test using mkdocs and obsidian template
+site_url: https://github_filmgal.io/mkdocsHelpTest
 
 theme:
     name: 'material'
